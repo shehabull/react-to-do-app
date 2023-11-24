@@ -21,12 +21,17 @@ connection.connect((err) => {
 const express = require("express");
 const app = express();
 const port = 3000;
+const cors = require("cors");
 
 app.use(express.json());
-
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 
 // Route to get all todos
-app.get("/todos", (req, res) => {
+app.get("/todos", cors(), (req, res) => {
   const query = "SELECT * FROM todos";
   connection.query(query, (err, results) => {
     if (err) {
